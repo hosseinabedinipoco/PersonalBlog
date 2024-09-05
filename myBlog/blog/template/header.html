@@ -1,0 +1,6 @@
+<h1>Personal</h1>
+{% if user.is_authenticated %}
+    <p>{{ user.username }}</p>
+{% else %}
+    <a href=""><button>login or signup</button></a>
+{% endif %}
