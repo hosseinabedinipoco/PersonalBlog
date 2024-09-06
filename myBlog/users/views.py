@@ -19,7 +19,7 @@ def login(request):
             custom_error = {}
             try:
                 user = User.objects.get(username=username)
-                if user.password != password:
+                if user.check_password(password):
                     custom_error['password'] = 'incorrect password'
                     form._errors.update(custom_error)
                 else:       

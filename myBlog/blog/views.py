@@ -5,7 +5,7 @@ from users.models import User
 # Create your views here.
 
 def home(request):
-    if not request.user.is_authenticated:
+    if not request.user:
         return redirect(f"{settings.LOGIN_URL}")
     users = User.objects.all()
     return render(request, 'home.html', {'users':users})
