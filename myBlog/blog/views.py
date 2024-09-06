@@ -5,7 +5,8 @@ from users.models import User
 # Create your views here.
 
 def home(request):
-    if not request.user:
+    user_id = request.session.get('user_id')
+    if not user_id:
         return redirect(f"{settings.LOGIN_URL}")
-    users = User.objects.all()
-    return render(request, 'home.html', {'users':users})
+    user = User.objects.get(pk=user_id)
+    return render(request, 'home.html', {'user':user})

@@ -5,6 +5,6 @@ class LoginForm(forms.Form):
 
 class RegisterForm(forms.Form):
     username = forms.CharField(max_length=20, label='username')
-    password1 = forms.PasswordInput()
-    password2 = forms.PasswordInput()
+    password1 = forms.CharField(widget=forms.PasswordInput())
+    password2 = forms.CharField(widget=forms.PasswordInput())
 
