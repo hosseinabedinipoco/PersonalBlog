@@ -24,8 +24,6 @@ def login(request):
                     form._errors.update(custom_error)
                 else:       
                     request.session["user_id"] = user.id
-                    if user.is_Admin:
-                        return redirect('index')
                     return redirect('home')
             except User.DoesNotExist:
                 custom_error['username'] = 'there is not this username'
