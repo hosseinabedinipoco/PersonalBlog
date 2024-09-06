@@ -1,0 +1,8 @@
+{% extends 'header.html' %}
+{% block body %}
+<h1>Helloooooo!</h1>
+{% for user in users %}
+<h2>{{ user.username }}</h2>
+<h3>{{ user.password }}</h3>
+{% endfor %}
+{% endblock %}
