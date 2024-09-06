@@ -22,8 +22,9 @@ from blog import views as blog_view
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('login', users_view.login, name='login'),
-    path('home/', blog_view.home, name='home'),
+    path('', blog_view.home, name='home'),
     path('logout', users_view.logout, name='logout'),
     path('register', users_view.register, name='register'),
-    path('index', blog_view.index, name='index')
+    path('index', blog_view.index, name='index'),
+    path('article/<int:id>', blog_view.article_detail, name='article_detail')
 ]

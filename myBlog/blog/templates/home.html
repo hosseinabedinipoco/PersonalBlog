@@ -1,5 +1,34 @@
 {% extends 'header.html' %}
 {% block body %}
-<h2>User panel</h2>
-<h3>{{ user.username }}</h3>
+<form action="" method="get">
+    <input type="search" name="title">
+    <button type="submit">search</button>
+</form>
+{% for article in articles %}
+<a href="{% url 'article_detail' article.id %}">
+    <div style="border: 3px solid black;">
+        <h2>{{ article.title }}</h2>  
+        <h3>{{ article.date }}</h3>
+        <h4>{{ article.view }}</h4>
+    </div>
+    <br>
+</a>
+{% endfor %}
+<div class="pagination"></div>
+    <span class="step-links">
+        {% if articles.has_previous %}
+            <a href="?page=1">&laquo; first</a>
+            <a href="?page={{ articles.previous_page_number }}">previous</a>
+        {% endif %}
+
+        <span class="current">
+            Page {{ articles.number }} of {{ articles.paginator.num_pages }}.
+        </span>
+
+        {% if articles.has_next %}
+            <a href="?page={{ articles.next_page_number }}">next</a>
+            <a href="?page={{ articles.paginator.num_pages }}">last &raquo;</a>
+        {% endif %}
+    </span>
+</div>
 {% endblock %}
