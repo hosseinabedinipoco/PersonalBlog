@@ -30,4 +30,8 @@ def login(request):
                 form._errors.update(custom_error)
     return render(request, 'login.html', {'form':form})
 
+def logout(request):
+    request.session.flush()
+    return redirect('login')
+
 

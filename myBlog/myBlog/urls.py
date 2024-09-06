@@ -22,5 +22,6 @@ from blog import views as blog_view
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('login', users_view.login, name='login'),
-    path('home/', blog_view.home, name='home')
+    path('home/', blog_view.home, name='home'),
+    path('logout', users_view.logout, name='logout')
 ]
