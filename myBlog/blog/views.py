@@ -2,11 +2,11 @@ from django.shortcuts import render, redirect
 from django.conf import settings
 from django.contrib.auth.decorators import login_required
 from users.models import User
-from blog.models import Article
+from blog.models import Article, Comment
 from django.core.paginator import Paginator
 from django.db.models import Q
 from .utility import *
-from .forms import ArticleForm
+from .forms import ArticleForm, CommentForm
 from datetime import date
 # Create your views here.
 
@@ -27,9 +27,21 @@ def article_detail(request, id):
     if not is_user(request):
         return redirect(f"{settings.LOGIN_URL}")
     article = Article.objects.get(pk=id)
-    article.view += 1
-    article.save()
-    return render(request, 'read_article.html', {'article':article})
+    if request.method == 'GET':
+        form = CommentForm()
+        article.view += 1
+        article.save()
+    if request.method == 'POST':
+        form = CommentForm(request.POST)
+        content = form['content'].value()
+        comment = Comment(content=content, article=article, send_user=User.objects.get(pk=request.session.get('user_id')))
+        comment.save()
+        form = CommentForm()
+    comments = Comment.objects.filter(article=article)
+    paginator = Paginator(comments, 3)
+    page_number = request.GET.get("page")
+    comments = paginator.get_page(page_number)
+    return render(request, 'read_article.html', {'article':article, 'comments':comments, 'form':form})
 
 def add_article(request):
     if not is_admin(request):

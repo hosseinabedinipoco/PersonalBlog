@@ -10,5 +10,5 @@ class Article(models.Model):
 
 class Comment(models.Model):
     content = models.CharField(max_length=100, null=False)
-    user = models.ManyToManyField(User)
-    article = models.OneToOneField(Article, on_delete=models.CASCADE)    
+    send_user = models.ForeignKey(User, on_delete=models.CASCADE, null=True)
+    article = models.ForeignKey(Article, on_delete=models.CASCADE)    

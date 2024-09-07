@@ -3,4 +3,34 @@
 <h2>{{ article.title }}</h2>
 <h3>{{ article.date }}</h3>
 <p>{{ article.content }}</p>
+<form action="" method="post">
+    {% csrf_token %}
+    {{ form }}
+    <button type="submit">send</button>
+</form>
+<h2>Comments:</h2>
+{% for comment in comments %}
+<div style="border: 3px solid black;">
+    <h3>{{ comment.send_user.username }}</h3>
+    <p>{{ comment.content }}</p>
+</div>
+<br>
+{% endfor %}
+<div class="pagination"></div>
+    <span class="step-links">
+        {% if comments.has_previous %}
+            <a href="?page=1">&laquo; first</a>
+            <a href="?page={{ comments.previous_page_number }}">previous</a>
+        {% endif %}
+
+        <span class="current">
+            Page {{ comments.number }} of {{ comments.paginator.num_pages }}.
+        </span>
+
+        {% if comments.has_next %}
+            <a href="?page={{ comments.next_page_number }}">next</a>
+            <a href="?page={{ comments.paginator.num_pages }}">last &raquo;</a>
+        {% endif %}
+    </span>
+</div>
 {% endblock %}
