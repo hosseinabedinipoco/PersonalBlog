@@ -49,6 +49,18 @@ def add_article(request):
 def update_article(request, id):
     if not is_admin(request):
         return redirect(f"{settings.LOGIN_URL}")
+    article = Article.objects.get(pk=id)
+    if request.method == 'GET':
+        form = ArticleForm(instance=article)
+    else:
+        form = ArticleForm(request.POST, instance=article)
+        if form.is_valid():
+            article.title = form['title'].value()
+            article.content = form['content'].value()
+            article.save()
+            return redirect('home')
+    return render(request, 'ArticleForm.html', {'form':form})
+
 
 def delete_article(request, id):
     if not is_admin(request):
