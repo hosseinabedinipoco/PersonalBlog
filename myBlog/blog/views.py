@@ -28,3 +28,20 @@ def article_detail(request, id):
     article.view += 1
     article.save()
     return render(request, 'read_article.html', {'article':article})
+
+def add_article(request):
+    pass
+
+def update_article(request, id):
+    pass
+
+def delete_article(request, id):
+    if not is_admin(request):
+        return redirect(f"{settings.LOGIN_URL}")
+    article = Article.objects.get(pk=id)
+    if request.method == 'GET':
+        return render(request, 'delete.html', {'article':article})
+    if request.method == 'POST':
+        article.delete()
+        return redirect('home')
+    

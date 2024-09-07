@@ -5,7 +5,7 @@
     <button type="submit">search</button>
 </form>
 {% if is_admin %}
-        <a href=""><button>ADD</button></a>
+        <a href="{% url 'add' %}"><button>ADD</button></a>
 {% endif %}
 {% for article in articles %}
 <a href="{% url 'article_detail' article.id %}">
@@ -14,8 +14,8 @@
         <h3>{{ article.date }}</h3>
         <h4>{{ article.view }}</h4>
         {% if is_admin %}
-        <a href=""><button>UPDATE</button></a>
-        <a href=""><button>DELETE</button></a>
+        <a href="{% url 'update' article.id %}"><button>UPDATE</button></a>
+        <a href="{% url 'delete' article.id %}"><button>DELETE</button></a>
         {% endif %}
     </div>
     <br>
