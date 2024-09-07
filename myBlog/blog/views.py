@@ -6,6 +6,8 @@ from blog.models import Article
 from django.core.paginator import Paginator
 from django.db.models import Q
 from .utility import *
+from .forms import ArticleForm
+from datetime import date
 # Create your views here.
 
 def home(request):
@@ -30,10 +32,23 @@ def article_detail(request, id):
     return render(request, 'read_article.html', {'article':article})
 
 def add_article(request):
-    pass
-
+    if not is_admin(request):
+        return redirect(f"{settings.LOGIN_URL}")
+    if request.method == 'GET':
+        form = ArticleForm()
+    else:
+        form = ArticleForm(request.POST)
+        if form.is_valid():
+            title = form['title'].value()
+            content = form['content'].value()
+            article = Article(title=title, content=content, date=date.today(), wirter=User.objects.get(pk=request.session.get('user_id')))
+            article.save()
+            return redirect('home')
+    return render(request, 'ArticleForm.html', {'form':form})
+     
 def update_article(request, id):
-    pass
+    if not is_admin(request):
+        return redirect(f"{settings.LOGIN_URL}")
 
 def delete_article(request, id):
     if not is_admin(request):
