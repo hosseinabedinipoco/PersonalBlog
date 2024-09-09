@@ -6,7 +6,7 @@ class Article(models.Model):
     date = models.DateField()
     content = models.CharField(max_length=500, null=False, default="tt")
     view = models.SmallIntegerField(default=0)
-    wirter = models.ForeignKey(User, on_delete=models.DO_NOTHING, related_name='articles_written')
+    wirter = models.ForeignKey(User, on_delete=models.CASCADE, related_name='articles_written')
 
 class Comment(models.Model):
     content = models.CharField(max_length=100, null=False)
